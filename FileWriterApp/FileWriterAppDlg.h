@@ -35,4 +35,5 @@ public:
 	CString m_filePath;
 	CString m_textToWrite;
 	afx_msg void OnBnClickedButtonWrite();
+	afx_msg void OnBnClickedButtonBrowse();
 };

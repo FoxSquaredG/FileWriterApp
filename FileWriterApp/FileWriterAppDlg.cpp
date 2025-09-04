@@ -70,6 +70,7 @@ BEGIN_MESSAGE_MAP(CFileWriterAppDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON_WRITE, &CFileWriterAppDlg::OnBnClickedButtonWrite)
+	ON_BN_CLICKED(IDC_BUTTON_BROWSE, &CFileWriterAppDlg::OnBnClickedButtonBrowse)
 END_MESSAGE_MAP()
 
 
@@ -206,5 +207,37 @@ void CFileWriterAppDlg::OnBnClickedButtonWrite()
 	{
 		// Если файл не удалось открыть (например, нет прав доступа или неверный путь)
 		AfxMessageBox(_T("Ошибка! Не удалось открыть файл для записи."));
+	}
+}
+
+void CFileWriterAppDlg::OnBnClickedButtonBrowse()
+{
+	// Создаем диалог для выбора файла.
+ // FALSE в первом параметре означает, что это диалог "Сохранить как" (Save As),
+ // что позволяет пользователю вводить новое имя файла.
+ // TRUE означало бы диалог "Открыть" (Open), где можно выбрать только существующий файл.
+ //
+ // Параметры конструктора CFileDialog:
+ // 1. bOpenFileDialog: FALSE для "Сохранить как".
+ // 2. lpszDefExt: Расширение по умолчанию (например, "txt").
+ // 3. lpszFileName: Имя файла по умолчанию (можно оставить NULL).
+ // 4. dwFlags: Флаги для настройки диалога.
+ //    OFN_HIDEREADONLY - скрыть галочку "Только для чтения".
+ //    OFN_OVERWRITEPROMPT - предупреждать, если файл уже существует.
+ // 5. lpszFilter: Фильтр типов файлов.
+ // 6. pParentWnd: Указатель на родительское окно.
+
+	CString filter = _T("Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*||");
+	CFileDialog dlg(FALSE, _T("txt"), NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, filter, this);
+
+	// Показываем диалоговое окно. Если пользователь нажал "Сохранить" (или "ОК"),
+	// метод DoModal() вернет IDOK.
+	if (dlg.DoModal() == IDOK)
+	{
+		// Получаем полный путь к выбранному файлу
+		m_filePath = dlg.GetPathName();
+
+		// Обновляем поле ввода на форме, чтобы показать выбранный путь
+		UpdateData(FALSE);
 	}
 }
