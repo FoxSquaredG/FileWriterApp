@@ -188,6 +188,11 @@ void CFileWriterAppDlg::OnBnClickedButtonWrite()
 		// Перемещаем указатель в конец файла для добавления новой строки
 		file.SeekToEnd();
 
+		if (!bFirstLine) {
+			file.WriteString(_T("======= new ===========================================\n"));
+			bFirstLine = true;
+		}
+
 		// Записываем текст и добавляем символ новой строки
 		file.WriteString(m_textToWrite + _T("\n"));
 

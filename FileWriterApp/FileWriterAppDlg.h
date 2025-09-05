@@ -30,6 +30,10 @@ protected:
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
+
+	bool bFirstLine = false;
+
+
 	DECLARE_MESSAGE_MAP()
 public:
 	CString m_filePath;
