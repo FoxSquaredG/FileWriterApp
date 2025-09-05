@@ -177,40 +177,84 @@ void CFileWriterAppDlg::OnBnClickedButtonWrite()
 		return; // Выходим из функции, если текст пуст
 	}
 
-	// 3. Запись в файл
-	CStdioFile file; // Используем CStdioFile для удобной работы с текстом
-	// Открываем файл в режиме "дозаписи".
-	// CFile::modeCreate - создать файл, если он не существует.
-	// CFile::modeNoTruncate - не удалять содержимое, если файл существует.
-	// CFile::modeWrite - открыть для записи.
+	//// 3. Запись в файл
+	//CStdioFile file; // Используем CStdioFile для удобной работы с текстом
+	//// Открываем файл в режиме "дозаписи".
+	//// CFile::modeCreate - создать файл, если он не существует.
+	//// CFile::modeNoTruncate - не удалять содержимое, если файл существует.
+	//// CFile::modeWrite - открыть для записи.
+	//if (file.Open(m_filePath, CFile::modeCreate | CFile::modeNoTruncate | CFile::modeWrite))
+	//{
+	//	// Перемещаем указатель в конец файла для добавления новой строки
+	//	file.SeekToEnd();
+
+	//	//if (!bFirstLine) {
+	//	//	file.WriteString(_T("======= new ===========================================\n"));
+	//	//	bFirstLine = true;
+	//	//}
+
+	//	// Записываем текст и добавляем символ новой строки
+	//	file.WriteString(m_textToWrite + _T("\n"));
+
+	//	// Закрываем файл
+	//	file.Close();
+
+	//	// 4. Очищаем поле ввода текста
+	//	m_textToWrite.Empty(); // Очищаем переменную
+
+	//	// 5. Обновляем интерфейс, чтобы очищенное поле отобразилось на форме
+	//	UpdateData(FALSE);
+
+	//	// Опционально: сообщаем об успехе
+	//	// AfxMessageBox(_T("Текст успешно добавлен в файл!"));
+	//}
+	//else
+	//{
+	//	// Если файл не удалось открыть (например, нет прав доступа или неверный путь)
+	//	AfxMessageBox(_T("Ошибка! Не удалось открыть файл для записи."));
+	//}
+
+	// 3. Получаем текущее время и дату
+	CTime currentTime = CTime::GetCurrentTime();
+
+	// 4. Запись в файл
+	CStdioFile file;
 	if (file.Open(m_filePath, CFile::modeCreate | CFile::modeNoTruncate | CFile::modeWrite))
 	{
-		// Перемещаем указатель в конец файла для добавления новой строки
-		file.SeekToEnd();
-
+		// Проверяем, является ли файл новым.
+		//// Если его длина равна 0, значит, он только что был создан.
+		//if (file.GetLength() == 0)
+		//{
 		if (!bFirstLine) {
-			file.WriteString(_T("======= new ===========================================\n"));
-			bFirstLine = true;
+			// Это новый файл, записываем заголовок с текущей датой
+			CString dateString = currentTime.Format(_T("%d.%m.%Y")); // Формат ДД.ММ.ГГГГ
+			CString header = _T("NewLine ") + dateString + _T("========================== \n");
+			file.WriteString(header);
 		}
 
-		// Записываем текст и добавляем символ новой строки
-		file.WriteString(m_textToWrite + _T("\n"));
+		// Перемещаем указатель в конец файла для дозаписи
+		file.SeekToEnd();
+
+		// Формируем основную строку для записи
+		CString timeString = currentTime.Format(_T("%H:%M:%S")); // Формат ЧЧ:ММ:СС
+		CString className = _T("CFileWriterAppDlg"); // Имя класса-источника
+
+		CString lineToWrite = timeString + _T(" ") + className + _T(" ") + m_textToWrite + _T("\n");
+
+		// Записываем сформированную строку
+		file.WriteString(lineToWrite);
 
 		// Закрываем файл
 		file.Close();
 
-		// 4. Очищаем поле ввода текста
-		m_textToWrite.Empty(); // Очищаем переменную
+		// Очищаем поле ввода текста
+		m_textToWrite.Empty();
 
-		// 5. Обновляем интерфейс, чтобы очищенное поле отобразилось на форме
+		// Обновляем интерфейс
 		UpdateData(FALSE);
-
-		// Опционально: сообщаем об успехе
-		// AfxMessageBox(_T("Текст успешно добавлен в файл!"));
 	}
 	else
 	{
-		// Если файл не удалось открыть (например, нет прав доступа или неверный путь)
 		AfxMessageBox(_T("Ошибка! Не удалось открыть файл для записи."));
 	}
 }
