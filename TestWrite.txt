@@ -9,12 +9,4 @@ fsfgsdsg
 ffffffffffffffffffff
 ggggggggggggggggg
 hhhhhhhhhhhhhhhhhhhh
-11:56:09 CFileWriterAppDlg 11:56:13 CFileWriterAppDlg 11:56:21 CFileWriterAppDlg 12:01:10 CFileWriterAppDlg 12:01:13 CFileWriterAppDlg 12:01:17 CFileWriterAppDlg NewLine 05.09.2025
-13:22:38 CFileWriterAppDlg 11111111111
-13:22:42 CFileWriterAppDlg 2222222222222222
-13:22:46 CFileWriterAppDlg 333333333333333333
-
- NewLine 05.09.2025=================== 
-13:24:19 CFileWriterAppDlg 123
-13:24:23 CFileWriterAppDlg 24324
-13:24:29 CFileWriterAppDlg 543534
+11:56:09 CFileWriterAppDlg 11:56:13 CFileWriterAppDlg 11:56:21 CFileWriterAppDlg 12:01:10 CFileWriterAppDlg 12:01:13 CFileWriterAppDlg 12:01:17 CFileWriterAppDlg 

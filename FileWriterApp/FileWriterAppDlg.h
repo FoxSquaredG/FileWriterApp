@@ -31,7 +31,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 
-	bool m_bHeaderWritten;
+	bool bFirstLine = false;
 
 
 	DECLARE_MESSAGE_MAP()
